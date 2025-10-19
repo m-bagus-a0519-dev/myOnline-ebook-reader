@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Upload, FileText, X } from 'lucide-react';
 import { Button } from './ui/button';
 import { useBooks } from '../contexts/BookContext';
-import { toast } from './ui/use-toast';
+import { toast } from '../hooks/use-toast';
 
 const UploadDropzone = ({ onClose }) => {
   const [isDragging, setIsDragging] = useState(false);
