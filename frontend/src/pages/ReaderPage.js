@@ -25,7 +25,7 @@ import { Progress } from '../components/ui/progress';
 import { Separator } from '../components/ui/separator';
 import { useTheme } from '../contexts/ThemeContext';
 import { useBooks } from '../contexts/BookContext';
-import { toast } from '../components/ui/use-toast';
+import { toast } from '../hooks/use-toast';
 import { Toaster } from '../components/ui/toaster';
 
 const ReaderPage = () => {
