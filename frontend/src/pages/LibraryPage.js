@@ -11,18 +11,27 @@ import { useTheme } from '../contexts/ThemeContext';
 import { useBooks } from '../contexts/BookContext';
 import { Toaster } from '../components/ui/toaster';
 
+// --- BENAR ---
 const LibraryPage = () => {
-  const navigate = useNavigate();
-  const { isDarkMode, toggleTheme } = useTheme();
-  const { filteredBooks, searchQuery, setSearchQuery } = useBooks();
-  const [uploadOpen, setUploadOpen] = useState(false);
-  const [viewMode, setViewMode] = useState('grid');
-  const [filterStatus, setFilterStatus] = useState('all');
+  const navigate = useNavigate();
+  const { isDarkMode, toggleTheme } = useTheme();
+  // 1. Ambil 'books' (daftar utuh), bukan 'filteredBooks'
+  const { books, searchQuery, setSearchQuery } = useBooks(); 
+  const [uploadOpen, setUploadOpen] = useState(false);
+  const [viewMode, setViewMode] = useState('grid');
+  const [filterStatus, setFilterStatus] = useState('all');
 
-  const statusFilteredBooks = filteredBooks.filter(book => {
-    if (filterStatus === 'all') return true;
-    return book.status === filterStatus;
-  });
+  // 2. Buat 'filteredBooks' secara manual berdasarkan pencarian
+  const filteredBooks = books.filter(book => 
+    book.title.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
+  // 3. Logika Anda selanjutnya untuk filter status sekarang sudah benar
+  const statusFilteredBooks = filteredBooks.filter(book => {
+    if (filterStatus === 'all') return true;
+    return book.status === filterStatus;
+  });
+// --- BENAR ---
 
   const stats = {
     total: filteredBooks.length,
@@ -172,8 +181,8 @@ const LibraryPage = () => {
               : 'space-y-4'
           }`}>
             {statusFilteredBooks.map(book => (
-              <BookCard key={book.id} book={book} />
-            ))}
+  <BookCard key={book._id} book={book} />
+))}
           </div>
         )}
       </div>
