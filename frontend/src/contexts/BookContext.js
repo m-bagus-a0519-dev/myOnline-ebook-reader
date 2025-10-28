@@ -47,24 +47,30 @@ export const BookProvider = ({ children }) => {
 
   const updateProgress = async (bookId, currentPage, totalPages) => {
     try {
+      // 1. HIT BACKEND (Gunakan 'api' bukan 'axios')
+      // Endpoint ini akan memperbarui 'current_page' dan 'last_read' di DB
       await api.put(`/books/${bookId}/progress`, {
         current_page: currentPage,
         total_pages: totalPages,
       });
-      
+
+      // 2. UPDATE STATE LOKAL (Agar UI langsung berubah)
+      // Ini akan mengubah status "Not Started" -> "Reading" di LibraryPage
       setBooks((prevBooks) =>
         prevBooks.map((book) =>
           book._id === bookId
             ? { 
                 ...book, 
                 current_page: currentPage, 
-                progress: (currentPage / totalPages) * 100 
+                progress: Math.round((currentPage / totalPages) * 100),
+                status: 'reading' // <-- Perbarui status
               }
             : book
         )
       );
     } catch (error) {
       console.error("Gagal update progress:", error);
+      // Tidak perlu toast di sini agar tidak mengganggu user
     }
   };
 
