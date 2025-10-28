@@ -10,9 +10,15 @@ import UploadDropzone from '../components/UploadDropzone';
 import { useTheme } from '../contexts/ThemeContext';
 import { useBooks } from '../contexts/BookContext';
 import { Toaster } from '../components/ui/toaster';
+import { useAuth } from '../contexts/AuthContext';
+
+
+
+import { LogOut } from 'lucide-react';
 
 // --- BENAR ---
 const LibraryPage = () => {
+  const { logout } = useAuth(); // <-- TAMBAHKAN INI
   const navigate = useNavigate();
   const { isDarkMode, toggleTheme } = useTheme();
   // 1. Ambil 'books' (daftar utuh), bukan 'filteredBooks'
@@ -130,6 +136,10 @@ const LibraryPage = () => {
                 >
                   <List className="w-4 h-4" />
                 </Button>
+
+                <Button variant="ghost" size="icon" onClick={logout} title="Logout">
+      <LogOut className="h-4 w-4" />
+    </Button>
               </div>
             </div>
           </div>
